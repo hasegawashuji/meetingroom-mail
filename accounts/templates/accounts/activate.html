@@ -1,0 +1,11 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+{% if result %}
+    <p>認証に成功しました。</p>
+    <p><a href="{% url 'accounts:account_login' %}">ログイン</a></p>
+{% else %}
+    <p>無効なリンクです。</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,1 @@
+web: gunicorn pj_meetingroom3.wsgi --log-file -

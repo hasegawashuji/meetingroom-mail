@@ -1,0 +1,50 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h4><div class="text-center my-1">カレンダー</div></h4>
+    <div class="text-center my-2 mb-3">
+        <a href="{% url 'app:month' month_previous.year month_previous.month %}" class="btn btn-warning">前月</a>
+        {{ month_current | date:"Y年m月" }}
+        <a href="{% url 'app:month' month_next.year month_next.month %}" class="btn btn-warning">次月</a>
+    </div>
+    <div class="">
+        <table class="table table-bordered bg-light">
+            <thead class="thead-light">
+            <tr>
+                {% for weekName in week_names %}
+                    {% if weekName == '土' %}
+                        <th scope="col" class="text-center text-primary">{{ weekName }}</th>
+                    {% elif weekName == '日' %}
+                        <th scope="col" class="text-center text-danger">{{ weekName }}</th>
+                    {% else %}
+                        <th scope="col" class="text-center">{{ weekName }}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            </thead>
+        <tbody>
+        {% for week in month_days %}
+            <tr>
+                {% for day in week %}
+                    {% if now == day %}
+                        <td class="text-center table-success" width="100">
+                    {% else %}
+                        <td class="text-center" width="100">
+                    {% endif %}
+
+                    {% if month_current.month != day.month %}
+                        <a href="{% url 'app:room' day.year day.month day.day %}">
+                        {{ day | date:"m/d" }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'app:room' day.year day.month day.day %}">
+                        {{ day.day }}
+                        </a>
+                    {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

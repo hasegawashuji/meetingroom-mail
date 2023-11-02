@@ -1,0 +1,48 @@
+{% extends 'app/base.html' %}
+
+
+{% block content %}
+
+<div class="text-center my-3">
+
+    <div class="mb-3">
+        <h3>マイページ<予約確認修正></h1>
+        <h5>{{ staff_data.user.first_name }} {{ staff_data.user.last_name }} 様</h5>
+    </div>
+
+    <div class="">
+        <table class="table table-bordered bg-light">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center text-primary">予約番号</th>
+                    <th class="text-center text-primary">開始日時</th>
+                    <th class="text-center text-primary">終了日時</th>
+                    <th class="text-center text-primary">会議室</th>
+                    <th class="text-center text-primary">利用者名</th>
+                    <th class="text-center text-primary">備考</th>
+                    <th class="text-center text-primary">予約取消</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booked in booking_data %}
+                    <tr>
+                        <td scope="row">{{ booked.pk }}</td>
+                        <td class="text-center" width="auto">{{ booked.start }}</td>
+                        <td class="text-center" width="auto">{{ booked.end }}</td>
+                        <td class="text-center" width="auto">{{ booked.room }}</td>
+                        <td class="text-center" width="auto">{{ booked.first_name }} {{ booked.last_name }}</td>
+                        <td class="text-center" width="auto">{{ booked.remarks }}</td>
+                        <td class="text-center" width="auto">
+                            <form method="post" action="{% url 'app:delete' booked.pk %}">
+                                {% csrf_token %}
+                                <button class="btn btn-danger" type="submit">取消</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
